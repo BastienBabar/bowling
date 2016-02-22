@@ -1,0 +1,9 @@
+== README
+
+* Ruby 2.2.1
+
+* Tests with Rspec Rails
+
+* No database
+
+* Run tests: bundle exec rspec
