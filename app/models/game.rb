@@ -3,12 +3,19 @@ class Game
 
   attr_reader :score, :frames, :playing_frame
 
-  def initialize
-    @score = 0
+  def initialize(score=0,frames=[],playing_frame=0)
+    @score = score
     @frames = []
-    # adding the 10 frames
-    FRAMES_NUMBER.times { @frames << Frame.new }
-    @playing_frame = 0
+    if frames == []
+      @frames = frames
+      # adding the 10 frames
+      FRAMES_NUMBER.times { @frames << Frame.new }
+    else
+      frames.each do |f|
+        @frames << Frame.new(f['bowls'], f['playing_bowl'], f['pins_left'], f['bonus'])
+      end
+    end
+    @playing_frame = playing_frame
   end
 
   def bowl(pins)
@@ -18,7 +25,11 @@ class Game
         # if spare or strike, we move to next frame, unless it's the last frame
         if last_frame?
           current_frame.bonus! unless current_frame.bonus?
-          current_frame.over? ? next_frame : current_frame.next!
+          if current_frame.over? then
+            next_frame
+          else
+            current_frame.next!
+          end
         else
           next_frame
         end
@@ -39,6 +50,21 @@ class Game
     @playing_frame == FRAMES_NUMBER
   end
 
+  def strike?(pins)
+    if last_frame? # each try can be a strike in last frame
+      if pins == PINS_NUMBER
+        current_frame.pins_left = PINS_NUMBER
+        return true
+      end
+    else
+      pins == PINS_NUMBER && current_frame.playing_bowl == 0
+    end
+  end
+
+  def spare?(pins)
+    !strike?(pins) && current_frame.pins_left == 0
+  end
+
   private
 
   def scoring(pins)
@@ -55,21 +81,6 @@ class Game
       end
     end
     @score += pins
-  end
-
-  def strike?(pins)
-    if last_frame? # each try can be a strike in last frame
-      if pins == PINS_NUMBER
-        current_frame.pins_left = PINS_NUMBER
-        return true
-      end
-    else
-      pins == PINS_NUMBER && current_frame.playing_bowl == 0
-    end
-  end
-
-  def spare?(pins)
-    !strike?(pins) && current_frame.pins_left == 0
   end
 
   def next_frame

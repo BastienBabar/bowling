@@ -1,0 +1,10 @@
+<div id="frame">Frame playing: <%= @game.playing_frame + 1 %></div>
+<%= form_tag(bowl_path, method: :get, remote: true, id: 'bowling_form') do %>
+    <%= label_tag(:pins, "Pins knocked: ") %>
+    <%= text_field_tag(:pins) %>
+    <%= submit_tag("Play") %>
+<% end %>
+<div id="score">Score: <%= @game.score %></div>
+<div id="replay" style="display: none;">
+  <%= link_to 'Replay', root_path %>
+</div>

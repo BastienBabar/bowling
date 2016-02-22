@@ -1,9 +1,11 @@
 == README
 
-* Ruby 2.2.1
+* Ruby 2.2.3
 
-* Tests with Rspec Rails
+* Rails 4.2.5.1
 
 * No database
+
+* Tests with Rspec Rails
 
 * Run tests: bundle exec rspec

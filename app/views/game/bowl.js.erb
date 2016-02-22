@@ -1,0 +1,12 @@
+<% if @game.over? %>
+    $('#score').text("Game over! Final score: " + <%= @game.score %>);
+    $('#frame').hide();
+    $('#bowling_form').hide();
+    $('#replay').show();
+<% else %>
+    $('#score').text("Score: " + <%= @game.score %>);
+    $('#frame').text("Frame playing: " + <%= @game.playing_frame + 1 %>);
+    <% if strike? %>
+        $('#score').append("  >>  STRIKE!");
+    <% end %>
+<% end %>
