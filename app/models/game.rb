@@ -105,19 +105,18 @@ class Game
 
   def previous_frame_special?(sym)
     if @playing_frame > 0
-      case sym
-        when :spare
-          unless last_frame? && # last frame special case
-              current_frame.playing_bowl > 1
+      unless last_frame? && # last frame special case
+          current_frame.playing_bowl > 1
+        case sym
+          when :spare
             previous_playing_frame(1).bowls[1].special == sym # check previous frame spare
-          end
-        when :strike
-          unless last_frame? && # last frame special case
-              current_frame.playing_bowl > 1
+          when :strike
             previous_playing_frame(1).bowls[0].special == sym # check previous frame strike
-          end
-        else
-         false
+          else
+           false
+        end
+      else
+        false
       end
     end
   end
