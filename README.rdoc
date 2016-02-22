@@ -9,3 +9,9 @@
 * Tests with Rspec Rails
 
 * Run tests: bundle exec rspec
+
+== TODO
+
+* Add controller and helper tests
+
+* Refactor scoring to be into a frame and display whole game's score
